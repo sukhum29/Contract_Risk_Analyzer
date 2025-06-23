@@ -1,14 +1,13 @@
 import streamlit as st
 import fitz  # PyMuPDF
 import nltk
-from nltk.tokenize import sent_tokenize
+from nltk.tokenize.punkt import PunktSentenceTokenizer, PunktParameters
 import re
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from transformers import pipeline
 from time import sleep
-from nltk import data as nltk_data
 
 # Ensure 'punkt' tokenizer is available
 try:
@@ -100,7 +99,8 @@ uploaded_file = st.file_uploader("Upload a legal PDF document", type="pdf")
 if uploaded_file:
     st.info("Extracting text from the uploaded PDF document...")
     raw_text = extract_text(uploaded_file)
-    clauses = sent_tokenize(raw_text)
+    tokenizer = PunktSentenceTokenizer()
+    clauses = tokenizer.tokenize(raw_text)
     clauses = [c.strip() for c in clauses if c.strip() and not c.strip().isdigit() and not re.fullmatch(r'\d+\.?', c.strip())]
 
     st.success(f"Successfully extracted {len(clauses)} clauses from the document.")
