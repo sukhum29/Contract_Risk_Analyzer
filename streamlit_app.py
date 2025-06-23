@@ -8,8 +8,13 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from transformers import pipeline
 from time import sleep
+from nltk import data as nltk_data
 
-nltk.download('punkt')
+# Ensure 'punkt' tokenizer is available
+try:
+    nltk_data.find("tokenizers/punkt")
+except LookupError:
+    nltk.download("punkt")
 
 # ----- Constants ----- #
 RISK_PATTERNS = {
@@ -147,7 +152,7 @@ if uploaded_file:
 
     # ----- Show Risk Scores ----- #
     bart_score = calculate_bart_score(df)
-    final_score = round( (bart_score), 2)
+    final_score = round( (0.6 * bart_score), 2)
     final_label = determine_risk_level(final_score)
 
     st.subheader("Overall Risk Scoring Summary")
