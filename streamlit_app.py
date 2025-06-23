@@ -1,17 +1,17 @@
 import streamlit as st
 import fitz  # PyMuPDF
 import nltk
-from nltk.tokenize.punkt import PunktSentenceTokenizer, PunktParameters
 import re
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from transformers import pipeline
 from time import sleep
+from nltk.tokenize.punkt import PunktSentenceTokenizer
 
-# Ensure 'punkt' tokenizer is available
+# Ensure 'punkt' is available
 try:
-    nltk_data.find("tokenizers/punkt")
+    nltk.data.find("tokenizers/punkt")
 except LookupError:
     nltk.download("punkt")
 
@@ -149,7 +149,6 @@ if uploaded_file:
     st.pyplot(fig)
 
     st.download_button("Download Results as CSV", data=df.to_csv(index=False), file_name="risk_analysis.csv", mime="text/csv")
-
     # ----- Show Risk Scores ----- #
     bart_score = calculate_bart_score(df)
     final_score = round( (0.6 * bart_score), 2)
