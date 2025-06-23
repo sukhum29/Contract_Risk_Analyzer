@@ -1,0 +1,9 @@
+# Ignore large or test data files
+*.pdf
+*.docx
+*.zip
+*.tar.gz
+*.dylib
+.DS_Store
+__pycache__/
+.env
